@@ -1,0 +1,23 @@
+{
+    "name": "Friends-and-Hot-Chocolate-NoSQL",
+    "version": "1.0.0",
+    "description": "Module 18 homework- Main",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+      "start": "node index",
+      "dev": "nodemon index",
+      "seed": "node utils/seed",
+      "heroku-postbuild": "node utils/seed.js"
+    },
+    "author": "Matthew Webb",
+    "Github": "https://github.com/mattchief4234",
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^6.0.13"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.9"
+    }
+  }
+  
