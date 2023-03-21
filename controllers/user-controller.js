@@ -1,4 +1,4 @@
-const {User, Thoughts} = requir('../models');
+const {User, Thoughts} = require('../models');
 
 const userController = {
 

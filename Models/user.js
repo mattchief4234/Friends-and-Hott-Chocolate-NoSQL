@@ -1,5 +1,9 @@
-const { Schema, Types } = require('mongoose');
-const momoent = require('moment');
+// const { Schema, Types, model } = require('mongoose');
+const moment = require('moment');
+const mongoose = require('mongoose');
+
+const { Schema, Types, model } = mongoose;
+mongoose.Promise = global.Promise;
 
 const userSchema = new Schema(
   {
@@ -14,7 +18,7 @@ const userSchema = new Schema(
       trim: true,
     },
     email: {
-      type: string,
+      type: String,
       required: true,
       unique: true,
       match: [/.+A.+\..+/]
@@ -41,6 +45,9 @@ const userSchema = new Schema(
   }
 );
 
-const User = model('User', userSchema);
+// const User = model('user', userSchema);
 
-module.exports = User;
+// module.exports = User;
+
+module.exports = 
+  mongoose.models.User || mongoose.model('User', userSchema);
