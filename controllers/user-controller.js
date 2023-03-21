@@ -5,7 +5,7 @@ const userController = {
     //get all users
     getAllUsers(req, res) {
         User.find({})
-        .select('__v')
+        .select('-__v')
         .sort({_id: -1})
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
@@ -16,14 +16,14 @@ const userController = {
 
     getUserByID({params}, res) {
         User.findOne({_id: params.id})
-        populate({
-            path: 'thoughts',
-            select: '-__v'
-        })
-        .populate({
-            path: 'friends',
-            select: '-__v'
-        })
+        // .populate({
+        //     path: 'thoughts',
+        //     select: '-__v'
+        // })
+        // .populate({
+        //     path: 'friends',
+        //     select: '-__v'
+        // })
         .then(dbUserData => {
             if(!dbUserData) {
                 res.status(404).json({message: 'Nouser FOund with this ID!'})
@@ -58,16 +58,25 @@ const userController = {
 
     //try and work on the delete user tomorrow..
     deleteUser({ params}, res) {
-        Thoughts.deleteMany({ userId: params.id })
-            .then(() => {
-                User.findOneAndDelete({ userId: params.id })
-                    if(!dbUserData) {
-                        res.status(404).json({message: 'No User found with this ID, please try again.'})
-                    }
-                    res.json(dbUserData);
-                    console.log('IT WORKED YOU GENIUS!!!')
-            })
-            .catch(err => res.json(err))
+        User.findOneAndDelete({_id: params.id})
+        .then(dbUserData => {
+            if(!dbUserData) {
+                res.status(404).json({ message: 'NO USER WITH THIS ID, try again!'});
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => res.status(400).json(err));
+        // Thoughts.deleteMany({ _id: params.id })
+        //     .then(() => {
+        //         User.findOneAndDelete({ _id: params.id })
+        //             if(!dbUserData) {
+        //                 res.status(404).json({message: 'No User found with this ID, please try again.'})
+        //             }
+        //             res.json(dbUserData);
+        //             console.log('IT WORKED YOU GENIUS!!!')
+        //     })
+        //     .catch(err => res.json(err))
 
     },
 
